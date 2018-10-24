@@ -1,0 +1,619 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<head lang="en">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Kite </title>
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="assets/scripts/jquery.js"></script>
+    <script type="text/javascript" src="assets/scripts/jquery-ui.custom.min.js"></script>
+
+    <script type="text/javascript" src="assets/scripts/shCore.js"></script>
+    <script type="text/javascript" src="assets/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="assets/scripts/shBrushCss.js"></script>
+    <script type="text/javascript" src="assets/scripts/shBrushPhp.js"></script>
+    <script type="text/javascript" src="assets/scripts/shBrushXml.js"></script>
+    <link type="text/css" rel="stylesheet" href="assets/blueprint-css/shCoreDefault.css" />
+
+    <!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+    <script type="text/javascript">
+        (function ($) {
+            $(document).ready(function () {
+                // Cache selectors
+                var lastId,
+                    topMenu = $(".menu .alpha"),
+                    topMenuHeight = topMenu.outerHeight() + 15,
+                    // All list items
+                    menuItems = topMenu.find("a"),
+                    canUpdateURL = typeof history.pushState === "function" ? true : false,
+                    // Anchors corresponding to menu items
+                    scrollItems = menuItems.map(function () {
+                        var item = $($(this).attr("href"));
+                        if (item.length) {
+                            return item;
+                        }
+                    });
+
+                // Bind click handler to menu items
+                // so we can get a fancy scroll animation
+                menuItems.click(function (e) {
+                    var href = $(this).attr("href"),
+                        offsetTop = $(href).offset().top - topMenuHeight + 1;
+
+                    $('html, body').stop().animate({
+                        scrollTop: offsetTop
+                    }, 300);
+                    e.preventDefault();
+                });
+
+                // Bind to scroll
+                $(window).scroll(function () {
+                    // Get container scroll position
+                    var fromTop = $(this).scrollTop() + topMenuHeight;
+
+                    // Get id of current scroll item
+                    var cur = scrollItems.map(function () {
+                        if ($(this).offset().top < fromTop)
+                            return this;
+                    });
+                    // Get the id of the current element
+                    cur = cur[cur.length - 1];
+                    var id = cur && cur.length ? cur[0].id : "";
+
+                    if (lastId !== id) {
+                        lastId = id;
+                        // Set/remove active class
+                        menuItems
+                            .parents('li').removeClass("active").end()
+                            .filter("[href=#" + id + "]").parent('li').addClass("active")
+                            .parents('li').addClass('active');
+
+                        if (canUpdateURL) {
+                            history.pushState(null, null, window.location.href.split('#').shift() + '#' + id);
+                        } else {
+                            var $section = $('#' + id);
+
+                            $section.attr('id', '');
+                            window.location.hash = '#' + id;
+                            $section.attr('id', id);
+                        }
+                    }
+                });
+
+                hashname = window.location.hash.replace('#', '');
+
+                $('.menu li').removeClass('active');
+                $('.menu li a[href=#' + hashname + ']')
+                    .parent('li').addClass('active')
+                    .parents('li').addClass('active');
+
+                elem = $('#' + hashname);
+
+                if (hashname.length > 1) {
+                    $('body, html').animate({
+                        scrollTop: $(elem).offset().top - topMenuHeight - 315
+                    }, 500, 'easeInOutCubic');
+                };
+            })
+        })(jQuery);
+    </script>
+</head>
+
+
+<body>
+    <div class="docs-header-bg">
+        <div class="docs-header">
+
+            <div class="logo">
+                <img src="../kite/images/logo.png" alt="">
+            </div>
+
+            <h1 class="center">Kite Documentation</h1>
+
+            <p>A Complete Guide of Kite Multi Page HTML Template - Document Version 1.0</p>
+           
+
+        </div>
+    </div>
+    <div class="container">
+
+        <!--      Section       -->
+
+        <!-- 		<h2 id="toc" class="alt">Table of Contents</h2> -->
+
+        <div class="menu">
+            <ol class="alpha">
+                <li><a href="#information">General Info</a>
+                    <ol>
+                        <li><a href="#folder-struc">Folder Structure</a>
+                        </li>
+                    </ol>
+                </li>
+                <li><a href="#how-to">How To?</a>
+                    <ol>
+                        <li><a href="#left-menu"> Menu</a></li>
+                        <li><a href="#home-carousel">Bootstrap carousel Home Page</a></li>                      
+                        <li><a href="#blogcarousel">owl Carousel </a></li>
+                    </ol>
+                </li>
+                <li><a href="#html">Code</a>
+                    <ol>
+                        <li><a href="#html">HTML</a>
+                        </li>
+                        <li><a href="#css">CSS</a>
+                        </li>
+                        <li><a href="#java">Java</a>
+                        </li>
+                    </ol>
+                </li>
+
+                <li><a href="#elements">Elements</a>
+                    <ol>
+                        <li><a href="#icons">icons</a></li>
+                         
+                    </ol>
+                </li>
+
+                <li><a href="#credits">Credits</a>
+                </li>
+
+                <!--
+		<li><a href="#woocommerce">Snippets</a>
+			<ol>
+				<li><a href="#productSettings">Additional product settings</a></li>
+				<li><a href="#productCategorySettings">Products category settings</a></li>
+			</ol>
+		</li>
+-->
+
+            </ol>
+        </div>
+
+
+        <h3 id="information"><strong>General Informations</strong> - <a href="#information">top</a></h3>
+
+        <p>First of all, we want to say <strong>thanks you!</strong> We are very grateful that you have chosen our template for your website. We will do everything we can to provide you the best support possible. Feel free asking us if you need more help.</p>
+
+        <p>This document covers the Kite structure, set up, and use of this template and provides answers and solutions to common problems and issues - we encourage you to read this document thoroughly if you are experiencing any difficulties. If you have any questions that are beyond the scope of this document, feel free to ask support.</p>
+
+
+        <hr>
+
+        <div class="subitems">
+
+            <h5 id="folder-struc"><strong>Folder Structure</strong> - <a href="#information">top</a></h5>
+            <ul class="folder-struc">
+                <li class="file folder">Documentation</li>
+                <li class="file folder">index</li>
+            </ul>
+
+            <ul class="folder-struc margin-left">
+
+                <li class="file folder">app</li>
+                <li class="file folder">css</li>
+                <li class="file folder">fonts</li>
+                <li class="file folder">images</li>
+                <li class="file folder">js</li>
+                <li class="file folder">less</li>
+                <li class="file folder">response</li>
+                <li class="file folder">theme</li>
+                <li class="file page">blog.html</li>
+                <li class="file page">faq.html</li>
+                <li class="file page">index.html</li>
+                <li class="file page">sign-in.html</li>
+                <li class="file page">sing-up.html</li>
+            </ul>
+
+            <hr>
+
+            <!--      Section       -->
+
+            <h3 id="how-to"><strong>How To?</strong> - <a href="#information">top</a></h3>
+
+
+			<h6 id="left-menu">How to Change  Menu?</h6>
+            <p>In html file you see top menu.</p>
+            <ul class="folder-struc">
+                <li class="file page">html</li>
+            </ul>
+            <pre class="code-box">
+&lt;nav id="menuzord" class="menuzord red"&gt;
+	&lt;a href="javascript:void(0)" class="menuzord-brand"&gt;&lt;img src="images/logo.png" alt=""&gt;&lt;/a&gt;
+	&lt;ul class="menuzord-menu"&gt;
+		&lt;li class="active"&gt;&lt;a href="#" data-scroll-nav="0"&gt;Home&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#" data-scroll-nav="1"&gt;Feature&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#" data-scroll-nav="2"&gt;feature2&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#" data-scroll-nav="3"&gt;screenshot&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#" data-scroll-nav="4"&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#" data-scroll-nav="5"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="#" data-scroll-nav="6"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a class="phix_button phix_button_color buy-btn" href="#"&gt;Get App Now&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+
+			<ul class="folder-struc">
+				<p>menu effect and animation here</p>
+                <li class="file page">custom.js</li>
+            </ul>
+            <pre class="code-box">
+
+/* ========================================
+===   Left Side Drop Down Menu Fade And Animation  ====
+=========================================== */
+
+$("#menuzord").menuzord({
+align: "right"
+});
+
+</pre>
+<hr />
+
+
+	<h6 id="home-carousel">How to Change Bootstrap carousel?</h6>
+            <p>In html file you see Bootstrap carousel</p>
+            <ul class="folder-struc">
+                <li class="file page">html</li>
+            </ul>
+            <pre class="code-box">
+&lt;div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false"&gt;
+	&lt;!-- Bottom Carousel Indicators --&gt;
+	&lt;div class="row"&gt;
+		&lt;ol class="carousel-indicators"&gt;
+			&lt;li data-target="#quote-carousel" data-slide-to="0"   class="active"&gt;
+				&lt;div class="image"&gt;
+					&lt;img class="img-responsive " src="images/testimonial1.png" alt=""&gt;
+				&lt;/div&gt;
+				&lt;div class="content"&gt;
+					&lt;h4&gt;Adele Simmons&lt;/h4&gt;
+					&lt;span&gt;Customer&lt;/span&gt;
+				&lt;/div&gt;
+			&lt;/li&gt;
+			&lt;li data-target="#quote-carousel" data-slide-to="1"&gt;
+				&lt;div class="image"&gt;
+					&lt;img class="img-responsive " src="images/testimonial3.png" alt=""&gt;
+				&lt;/div&gt;
+				&lt;div class="content"&gt;
+					&lt;h4&gt;Max Zimmerman&lt;/h4&gt;
+					&lt;span&gt;Customer&lt;/span&gt;
+				&lt;/div&gt;
+			&lt;/li&gt;
+			&lt;li data-target="#quote-carousel" data-slide-to="2"&gt;
+				&lt;div class="image"&gt;
+					&lt;img class="img-responsive " src="images/testimonial1.png" alt=""&gt;
+				&lt;/div&gt;
+				&lt;div class="content"&gt;
+					&lt;h4&gt;Bill Walters&lt;/h4&gt;
+					&lt;span&gt;Customer&lt;/span&gt;
+				&lt;/div&gt;
+			&lt;/li&gt;
+		&lt;/ol&gt;
+	&lt;/div&gt;
+	&lt;!-- Carousel Slides / Quotes --&gt;
+	&lt;div class="carousel-inner text-center"&gt;
+		&lt;!-- Quote 1 --&gt;
+		&lt;div class="item active"&gt;
+			&lt;blockquote&gt;
+				&lt;div class="row"&gt;
+					&lt;div class="col-sm-12"&gt;
+						&lt;div class="author"&gt;
+							&lt;span&gt;Fantastic app&lt;/span&gt;
+							&lt;ul&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+							&lt;/ul&gt;
+						&lt;/div&gt;
+						&lt;p&gt;We use it in our terminal for customers to leave reviews after they've taken their helicopter tour. It's simple, inexpensive, fun and was exactly what we were looking for&lt;/p&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/blockquote&gt;
+		&lt;/div&gt;
+		&lt;!-- Quote 2 --&gt;
+		&lt;div class="item"&gt;
+			&lt;blockquote&gt;
+				&lt;div class="row"&gt;
+					&lt;div class="col-sm-12"&gt;
+						&lt;div class="author"&gt;
+							&lt;span&gt;Fantastic app&lt;/span&gt;
+							&lt;ul&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+							&lt;/ul&gt;
+						&lt;/div&gt;
+						&lt;p&gt;We use it in our terminal for customers to leave reviews after they've taken their helicopter tour. It's simple, inexpensive, fun and was exactly what we were looking for&lt;/p&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/blockquote&gt;
+		&lt;/div&gt;
+		&lt;!-- Quote 3 --&gt;
+		&lt;div class="item"&gt;
+			&lt;blockquote&gt;
+				&lt;div class="row"&gt;
+					&lt;div class="col-sm-12"&gt;
+						&lt;div class="author"&gt;
+							&lt;span&gt;Fantastic app&lt;/span&gt;
+							&lt;ul&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+								&lt;li&gt;&lt;a href="#"&gt;&lt;i class="fa fa-star-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+							&lt;/ul&gt;
+						&lt;/div&gt;
+						&lt;p&gt;We use it in our terminal for customers to leave reviews after they've taken their helicopter tour. It's simple, inexpensive, fun and was exactly what we were looking for&lt;/p&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/blockquote&gt;
+		&lt;/div&gt;
+		&lt;div class="divider"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+			</pre>
+<hr />
+
+
+
+
+<h6 id="blogcarousel">How to Change blog carousel?</h6>
+            <p>In blog.html file you see carousel</p>
+            <ul class="folder-struc">
+                <li class="file page">index-2.html</li>
+            </ul>
+            <pre class="code-box">
+&lt;div class="home-two-sereenshot"&gt;
+	&lt;div class=""&gt;
+		&lt;div class="single-screen"&gt;
+			&lt;img src="images/home2/3.jpg" class="img-responsive" alt="" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=""&gt;
+		&lt;div class="single-screen"&gt;
+			&lt;img src="images/home2/4.jpg" class="img-responsive" alt="" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=""&gt;
+		&lt;div class="single-screen"&gt;
+			&lt;img src="images/home2/5.jpg" class="img-responsive" alt="" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=""&gt;
+		&lt;div class="single-screen"&gt;
+			&lt;img src="images/home2/3.jpg" class="img-responsive" alt="" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class=""&gt;
+		&lt;div class="single-screen"&gt;
+			&lt;img src="images/home2/4.jpg" class="img-responsive" alt="" /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+			</pre>
+
+			<ul class="folder-struc">
+				<p>Blog carousel</p>
+                <li class="file page">custom.js</li>
+            </ul>
+            <pre class="code-box">
+$('.home-two-sereenshot').owlCarousel({
+    autoPlay:false,
+    pagination:false,
+    navigation:true,
+    items:3,
+    navigationText:[
+        "&lt;i class='ion-android-arrow-back'&gt;&lt;/i&gt;",
+        "&lt;i class='ion-android-arrow-forward'&gt;&lt;/i&gt;"
+    ]
+})
+
+</pre>
+<hr />
+
+
+            <h3 id="html"><strong>HTML Structure</strong> - <a href="#information">top</a></h3>
+
+            <div class="narrow-p">
+
+                <p>The template is build on <a href="http://getbootstrap.com" target="_blank">Bootstrap 3.3.6</a> the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web..</p>
+
+                <p>Bootstrap includes a responsive, mobile first fluid grid system that appropriately scales up to 12 columns as the device or viewport size increases. It includes predefined classes for easy layout options, as well as powerful mixins for generating more semantic layouts.</p>
+
+                <p>Create a .container (fixed-width) or .container-fluid (full-width) for proper alignment and padding, then create .row and add columns with appropriate device name (xs, sm, md, lg) and grid number (2, 4, 6, 12).</p>
+
+                <p>For full documentation, please visit Bootstrap 3 site: <a href="http://getbootstrap.com/css" target="_blank">http://getbootstrap.com/css/</a>
+                </p>
+                <ul class="folder-struc">
+                    <li class="file page">css/bootstrap.css</li>
+                </ul>
+
+                <pre class="code-box">
+&lt;!-- Bootstrap --&gt;
+&lt;link href=&quot;css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;
+
+&lt;/head&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+	&lt;div class=&quot;row&quot;&gt;
+		&lt;div class=&quot;col-md-6&quot;&gt;
+			...
+		&lt;/div&gt;
+
+		&lt;div class=&quot;col-md-6&quot;&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+            </div>
+
+            <hr>
+            <!-- HTML -->
+
+            <!-- CSS -->
+            <h3 id="css"><strong>CSS Structure</strong> - <a href="#information">top</a></h3>
+
+            <div class="narrow-p">
+
+                <p>CSS folder and files struture Well organized.
+                    <br>These are the CSS file you're be using in the template:</p>
+
+                <ul class="folder-struc">
+                    <li class="file folder">css</li>
+                </ul>
+
+                <pre class="code-box">
+bootstrap.css (Bootstrap Original file of v3.3.6 Don't touch this file)
+style.css (All custom elements in this file)
+	</pre>
+
+            </div>
+
+            <hr>
+            <!-- CSS -->
+
+
+            <!-- Java Script -->
+            <h3 id="java"><strong>Java Script</strong> - <a href="#information">top</a></h3>
+
+            <div class="narrow-p">
+
+                <p>jQuery - is a Javascript library that greatly reduces the amount of code that you must write. For more information, please visit http://www.jquery.com/</p>
+
+                <p>The initialization of the elements, libs and features is made by the file scripts.js, in the js folder. Take a look at the "build" function to see what it does.</p>
+
+                <ul class="folder-struc">
+                    <li class="file page">js/custom.js</li>
+                </ul>
+
+                <pre class="code-box">
+&lt;!-- Custom Functions --&gt;
+&lt;script src=&quot;js/custom.js&quot; &gt;&lt;/script&gt;
+	</pre>
+
+            </div>
+
+            <hr>
+            <!-- Java Script -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+            <hr>
+            <!-- Elements -->
+
+
+
+            <!-- Icons -->
+            <h3 id="icons"><strong>Icons</strong> - <a href="#information">top</a></h3>
+
+            <div class="narrow-p" id="elements">
+
+                <p>In Kite we used FontAwesome icons. Which is more user friendly and 350+ icons avaiable.</p>
+
+                <span class="notice-box">You can find all icon classes here : <a href="http://fontawesome.github.io/Font-Awesome/cheatsheet/" target="_blank">FontAwesome</a>.</span>
+
+
+                <p>Use of icons :</p>
+                <pre class="code-box">
+&lt;i class=&quot;fa fa-star&quot;&gt;&lt;i&gt;
+</pre>
+
+            </div>
+			<div class="narrow-p">
+
+							<p>In Kite we used Ion icons. Which is more user friendly and 700+ icons avaiable.</p>
+
+							<span class="notice-box">You can find all icon classes here : <a href="https://github.com/driftyco/ionicons" target="_blank">Ion icons</a>.</span>
+
+							<p>Use of icons :</p>
+							<pre class="code-box">
+&lt;i class=&quot;ion-flash&quot;&gt;&lt;i&gt;
+</pre>
+
+			</div>
+
+			<hr>
+			<!-- Icons -->
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+            <hr>
+            <!-- Slider -->
+            <div class="container">
+            <!-- Credits -->
+            <h5 id="credits"><strong>Sources and Credits</strong> - <a href="#information">top</a></h5>
+
+           <div class="narrow-p">
+
+            <b>I've used the following plugins as listed.</b>
+
+            <ul>
+                <li><a href="#">MenuZord Menu</a></li>
+                <li><a href="http://getbootstrap.com/">bootstrap</a></li>
+                <li><a href="http://www.bytemuse.com/scrollIt.js/">ScrollIt</a></li>
+                <li><a href="https://github.com/OwlFonk/OwlCarousel">Owl Carousel</a></li>
+            </ul>
+            <hr class="space">
+
+        <p><strong>Free fonts:</strong></p>
+
+        <ul>
+          <li><a href="https://fonts.google.com/specimen/Open+Sans?query=open">OpenSans</a></li>
+          <li><a href="https://fonts.google.com/specimen/Montserrat?query=mon">Montserrat</a></li>
+         
+        </ul>
+        <hr class="space">
+
+        <p>All images have been used for demonstration purposes only and are not included in the template.</p>
+
+        <hr class="space">
+
+        <!-- Credits -->
+
+        <p>Once again, thank you so much for purchasing this template. As I said at the beginning, I'd be glad to help you if you have any questions relating this template. No guarantees, but I'll do my best to assist. If you have any suggestions on how to improve our templates or documentation please share them!</p>
+
+        <hr class="space">
+
+        </div>
+
+
+    </div>
+    <!-- end div .container -->
+
+</body>
+
+</html>
