@@ -192,7 +192,8 @@ jQuery(document).ready(function () {
     }
 
     if (getRequestParameter('showThankYou') === '1') {
-      $('#thank-you-modal').modal('show');
+      // $('#thank-you-modal').modal('show');
+      $('.email-success').css('display', 'block');
     }
 });
 
